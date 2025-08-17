@@ -1,0 +1,580 @@
+/* --- Fonts and Basic Setup --- */
+@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Cairo:wght@400;700&display=swap');
+
+:root {
+    --primary-color: #00796b;
+    --primary-dark: #004d40;
+    --secondary-color: #ffc107;
+    --light-bg: #f0f7f6;
+    --white-bg: #ffffff;
+    --text-color: #333;
+    --border-color: #ddd;
+    --danger-color: #dc3545;
+}
+
+/* --- Theme: Dark Mode --- */
+body.dark-mode {
+    --primary-color: #26a69a;
+    --primary-dark: #80cbc4;
+    --light-bg: #121212;
+    --white-bg: #1e1e1e;
+    --text-color: #e0e0e0;
+    --border-color: #444;
+}
+
+/* --- General Body and Container Styles --- */
+body {
+    font-family: 'Cairo', sans-serif;
+    text-align: center;
+    background-color: var(--light-bg);
+    color: var(--text-color);
+    line-height: 1.8;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 25px;
+    background-color: var(--white-bg);
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: background-color 0.3s;
+}
+
+.hidden {
+    display: none;
+}
+
+h1, h2, h3, h4 {
+    color: var(--primary-dark);
+    font-family: 'Amiri', serif;
+    transition: color 0.3s;
+}
+
+/* --- Forms and Buttons --- */
+input, select {
+    width: 80%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-family: 'Cairo', sans-serif;
+    background-color: var(--white-bg);
+    color: var(--text-color);
+}
+
+button, .button-style {
+    padding: 12px 25px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: var(--primary-color);
+    color: white;
+    transition: background-color 0.3s;
+    text-decoration: none;
+    display: inline-block;
+    margin: 5px;
+}
+
+button:hover, .button-style:hover {
+    background-color: var(--primary-dark);
+}
+
+button:disabled {
+    background-color: #999;
+    cursor: not-allowed;
+}
+
+/* --- Heatmap Styles --- */
+#hifz-heatmap {
+    display: grid;
+    grid-template-columns: repeat(30, 1fr);
+    gap: 2px;
+    margin: 20px 0;
+    direction: ltr;
+}
+
+.heatmap-cell {
+    width: 100%;
+    padding-bottom: 100%; /* Aspect ratio 1:1 */
+    background-color: #eee;
+    border-radius: 2px;
+    position: relative;
+}
+
+body.dark-mode .heatmap-cell {
+    background-color: #333;
+}
+
+.heatmap-cell[data-level='4'] { background-color: #004d40; } /* Mastered */
+.heatmap-cell[data-level='3'] { background-color: #4caf50; } /* Good */
+.heatmap-cell[data-level='2'] { background-color: #ffc107; } /* Medium */
+.heatmap-cell[data-level='1'] { background-color: #ff8a65; } /* Weak */
+
+.heatmap-cell .tooltip {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.heatmap-cell:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* --- Modals (Pop-ups) --- */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6);
+}
+
+.modal-content {
+    background-color: var(--white-bg);
+    margin: 10% auto;
+    padding: 30px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 600px;
+    border-radius: 10px;
+    text-align: center;
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: scale(0.9);}
+    to {opacity: 1; transform: scale(1);}
+}
+
+.close-button {
+    color: #aaa;
+    float: left;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.meaning-modal-content {
+    text-align: right;
+}
+
+.meaning-modal-content h4 {
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 10px;
+}
+
+/* --- Motivation & Profile Features --- */
+#motivation-features {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #e0f2f1;
+    padding: 10px;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+body.dark-mode #motivation-features {
+    background-color: #2a2a2a;
+}
+
+.feature-box {
+    text-align: center;
+}
+
+.feature-box .icon {
+    font-size: 1.8em;
+}
+
+.feature-box p {
+    margin: 0;
+    font-weight: bold;
+    color: var(--primary-dark);
+}
+
+.feature-box span {
+    font-size: 12px;
+}
+
+#xp-bar-container {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    margin-top: 5px;
+    height: 10px;
+}
+
+#xp-bar {
+    width: 0%;
+    height: 100%;
+    background-color: var(--primary-color);
+    border-radius: 5px;
+    transition: width 0.5s ease-in-out;
+}
+
+#xp-text {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+#profile-screen .profile-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 20px;
+    align-items: start;
+}
+
+#progress-tree-container {
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#progress-tree {
+    font-size: 5em;
+    transition: transform 0.5s;
+}
+
+.achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.achievement-card {
+    border: 1px solid var(--border-color);
+    padding: 10px;
+    border-radius: 8px;
+    opacity: 0.5;
+}
+
+.achievement-card.unlocked {
+    opacity: 1;
+    border-color: var(--primary-color);
+    background-color: #f0f7f6;
+}
+
+body.dark-mode .achievement-card.unlocked {
+    background-color: #2a2a2a;
+}
+
+.achievement-card .icon {
+    font-size: 2em;
+}
+
+.achievement-card h5 {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+/* --- Quiz Area --- */
+#question-area {
+    margin-top: 20px;
+    padding: 15px;
+    position: relative;
+    min-height: 300px; /* To prevent layout shift during skeleton loading */
+}
+
+audio {
+    width: 100%;
+    margin: 15px 0;
+}
+
+.interactive-area {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+    direction: ltr;
+}
+
+.choice-box, .number-box {
+    padding: 15px 20px;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.choice-box:hover, .number-box:hover {
+    background-color: #e0f2f1;
+    border-color: var(--primary-color);
+}
+
+body.dark-mode .choice-box:hover, body.dark-mode .number-box:hover {
+    background-color: #2a2a2a;
+}
+
+.number-box.selected {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.option-div {
+    margin: 10px 0;
+    padding: 15px;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 20px;
+    font-family: 'Amiri', serif;
+    text-align: right;
+}
+
+.option-div:hover {
+    background-color: #e0f2f1;
+    border-color: var(--primary-color);
+}
+
+body.dark-mode .option-div:hover {
+    background-color: #2a2a2a;
+}
+
+.loader {
+    border: 8px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 8px solid var(--primary-color);
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 20px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* --- Feedback and Results --- */
+#feedback-area {
+    font-size: 1.2em;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+.correct-feedback {
+    color: #155724;
+    background-color: #d4edda;
+}
+
+.wrong-feedback {
+    color: #721c24;
+    background-color: #f8d7da;
+}
+
+.motivational-feedback {
+    color: var(--primary-dark);
+    background-color: #e0f2f1;
+}
+
+body.dark-mode .correct-feedback {
+    color: #d4edda;
+    background-color: #155724;
+}
+
+body.dark-mode .wrong-feedback {
+    color: #f8d7da;
+    background-color: #721c24;
+}
+
+body.dark-mode .motivational-feedback {
+    color: #80cbc4;
+    background-color: #2a2a2a;
+}
+
+.correct-answer {
+    background-color: #d4edda !important;
+    border-color: #28a745 !important;
+}
+
+.wrong-answer {
+    background-color: #f8d7da !important;
+    border-color: var(--danger-color) !important;
+}
+
+#progress-container {
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+#progress-bar {
+    width: 0%;
+    height: 10px;
+    background-color: var(--primary-color);
+    border-radius: 5px;
+    transition: width 0.5s ease-in-out;
+}
+
+#progress-counter {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 5px;
+}
+
+body.dark-mode #progress-counter {
+    color: #aaa;
+}
+
+.error-review-item {
+    border: 2px solid #f8d7da;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    text-align: right;
+}
+
+.correct-text {
+    color: #155724;
+    font-weight: bold;
+}
+
+#challenge-link-container {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #e0f2f1;
+    border: 1px dashed var(--primary-color);
+    border-radius: 5px;
+}
+
+body.dark-mode #challenge-link-container {
+    background-color: #2a2a2a;
+}
+
+#challenge-link {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+    direction: ltr;
+}
+
+/* --- Advanced Stats & Hafiz Card --- */
+#profile-screen .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.stat-card {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+body.dark-mode .stat-card {
+    background-color: #2a2a2a;
+}
+
+.stat-card h5 {
+    margin: 0 0 10px 0;
+    font-size: 1em;
+}
+
+.stat-card p {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin: 0;
+}
+
+#hafiz-card {
+    display: none;
+    width: 400px;
+    padding: 20px;
+    background: linear-gradient(135deg, #e0f2f1, #ffffff);
+    border: 2px solid var(--primary-color);
+    border-radius: 15px;
+    font-family: 'Cairo', sans-serif;
+    color: var(--primary-dark);
+}
+
+#hafiz-card h2 {
+    font-family: 'Amiri', serif;
+}
+
+#hafiz-card .tree {
+    font-size: 4em;
+}
+
+/* --- Loading Skeleton Styles --- */
+.skeleton {
+    opacity: 0.7;
+    animation: skeleton-loading 1s linear infinite alternate;
+    background-color: hsl(200, 20%, 80%);
+}
+
+@keyframes skeleton-loading {
+    0% { background-color: hsl(200, 20%, 80%); }
+    100% { background-color: hsl(200, 20%, 95%); }
+}
+
+body.dark-mode .skeleton {
+    animation: skeleton-loading-dark 1s linear infinite alternate;
+}
+
+@keyframes skeleton-loading-dark {
+    0% { background-color: hsl(200, 10%, 20%); }
+    100% { background-color: hsl(200, 10%, 30%); }
+}
+
+.skeleton-audio {
+    width: 100%;
+    height: 54px; /* نفس ارتفاع مشغل الصوت */
+    border-radius: 25px;
+    margin: 15px 0;
+}
+
+.skeleton-text {
+    width: 100%;
+    height: 24px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+}
+
+.skeleton-text:last-child {
+    margin-bottom: 0;
+}
+
+.skeleton-option {
+    width: 100%;
+    height: 68px; /* نفس ارتفاع خيارات الإجابة */
+    border-radius: 8px;
+    margin: 10px 0;
+}

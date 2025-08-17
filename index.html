@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>رفيق الحفظ المتقدم</title>
+    
+    <!-- رابط لملف الأنماط CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- مكتبة خارجية لإنشاء الصور (مهمة لبطاقة الحافظ) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+
+    <!-- شاشة البداية -->
+    <div id="start-screen" class="container">
+        <h1>رفيق الحفظ المتقدم</h1>
+        <p>أهلاً بك <strong id="welcome-name"></strong>! <span id="user-title" style="color: var(--primary-color); font-weight: bold;"></span></p>
+        
+        <div id="motivation-features">
+            <div class="feature-box">
+                <div class="icon">🔥</div>
+                <p><span id="streak-counter">0</span></p>
+                <span>سلسلة يومية</span>
+            </div>
+            <div class="feature-box" style="flex-grow: 1; padding: 0 10px;">
+                <div id="xp-text">المستوى 1 (0/100)</div>
+                <div id="xp-bar-container"><div id="xp-bar"></div></div>
+                <span>نقاط الخبرة</span>
+            </div>
+            <div class="feature-box">
+                <div class="icon">🏆</div>
+                <p><span id="achievements-counter">0</span></p>
+                <span>الإنجازات</span>
+            </div>
+        </div>
+
+        <button id="smart-review-btn" class="button-style" style="background-color: var(--secondary-color); color: var(--primary-dark);">🚀 ابدأ المراجعة الذكية</button>
+        
+        <hr style="margin: 20px 0;">
+
+        <input type="text" id="userName" placeholder="أدخل اسمك للبدء">
+        <br>
+        <input type="number" id="pageNumber" placeholder="أو أدخل رقم صفحة (1-604)" min="1" max="604">
+        
+        <br><br>
+        <button id="startButton">ابدأ الاختبار</button>
+        <button id="profileButton" class="button-style" style="background-color: #555;">ملفي الشخصي</button>
+        <div id="loader" class="loader hidden"></div>
+    </div>
+
+    <!-- شاشة الملف الشخصي -->
+    <div id="profile-screen" class="container hidden">
+        <h2>ملفي الشخصي: <span id="profileName"></span></h2>
+        <button id="share-card-btn">شارك بطاقة الحافظ</button>
+        <button id="theme-toggle-btn">الوضع الليلي</button>
+<div class="settings-item">
+    <label for="reciter-select">اختر القارئ المفضل:</label>
+    <select id="reciter-select">
+        <!-- سيتم ملء هذه القائمة بواسطة جافاسكريبت -->
+    </select>
+</div>
+
+        <hr>
+        <h3>خريطة الحفظ الحرارية</h3>
+        <div id="hifz-heatmap"></div>
+        <hr>
+        <div class="profile-grid">
+            <div id="progress-tree-container">
+                <h4>شجرة الحفظ</h4>
+                <div id="progress-tree">🌱</div>
+                <p><span id="mastered-pages-count">0</span>/604 صفحات متقنة</p>
+            </div>
+            <div>
+                <h4>🏅 إنجازاتك</h4>
+                <div id="achievements-container" class="achievements-grid"></div>
+            </div>
+        </div>
+        <hr>
+        <h3>📊 إحصائياتك المتقدمة</h3>
+        <div id="advanced-stats-container" class="stats-grid"></div>
+        <hr>
+        <button id="back-to-start-btn">العودة للقائمة الرئيسية</button>
+    </div>
+
+    <!-- شاشة الاختبار -->
+    <div id="quiz-screen" class="container hidden">
+        <div id="progress-counter"></div>
+        <div id="progress-container"><div id="progress-bar"></div></div>
+        <hr>
+        <div id="question-area">
+            <!-- سيتم ملء هذه المنطقة بواسطة هياكل التحميل والجافاسكريبت -->
+        </div>
+        <div id="feedback-area" class="hidden"></div>
+        <button id="meaning-btn" class="button-style hidden" style="background-color: #42a5f5;">اكتشف المعنى</button>
+    </div>
+
+    <!-- شاشة مراجعة الأخطاء -->
+    <div id="error-review-screen" class="container hidden">
+        <h2>مراجعة الأخطاء</h2>
+        <div id="error-list"></div>
+        <button id="show-final-result-button">عرض النتيجة النهائية</button>
+    </div>
+
+    <!-- شاشة النتيجة النهائية -->
+    <div id="result-screen" class="container hidden">
+        <h2>النتيجة النهائية</h2>
+        <p>أحسنت يا <span id="resultName"></span>!</p>
+        <p>نتيجتك هي: <span id="finalScore"></span></p>
+        <p>+<span id="xp-gained-text"></span> نقطة خبرة!</p>
+        <div id="challenge-link-container">
+            <p>هل تريد تحدي صديق؟ شارك معه هذا الرابط!</p>
+            <input type="text" id="challenge-link" readonly>
+            <button id="copy-challenge-btn">نسخ الرابط</button>
+        </div>
+        <br>
+        <button onclick="location.reload()">إجراء اختبار جديد</button>
+    </div>
+
+    <!-- النوافذ المنبثقة (Modals) -->
+    <div id="daily-reward-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="close-daily-modal">&times;</span>
+            <div class="icon">🎁</div>
+            <h2>مكافأة اليوم!</h2>
+            <p id="reward-text" style="font-size: 1.2em; font-weight: bold;"></p>
+        </div>
+    </div>
+
+    <div id="meaning-modal" class="modal">
+        <div class="modal-content meaning-modal-content">
+            <span class="close-button" id="close-meaning-modal">&times;</span>
+            <div id="meaning-content"><div class="loader"></div></div>
+        </div>
+    </div>
+
+    <!-- بطاقة الحافظ (عنصر مخفي للتحويل إلى صورة) -->
+    <div id="hafiz-card">
+        <h2>بطاقة الحافظ</h2>
+        <h3 id="card-name"></h3>
+        <p id="card-title" style="color: var(--primary-color);"></p>
+        <div id="card-tree" class="tree"></div>
+        <p><strong>المستوى:</strong> <span id="card-level"></span></p>
+        <p><strong>الصفحات المتقنة:</strong> <span id="card-mastered"></span></p>
+        <p><strong>الإنجازات:</strong> <span id="card-achievements"></span></p>
+        <p style="font-size: 10px; margin-top: 15px;">تم إنشاؤها عبر تطبيق رفيق الحفظ المتقدم</p>
+    </div>
+
+    <!-- التعديل المهم هنا: إضافة type="module" -->
+    <script src="script.js" type="module"></script>
+</body>
+</html>
